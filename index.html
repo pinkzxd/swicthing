@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ch-ZN">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>分页器</title>
+  <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+  <meta name="format-detection" content="telephone=no,email=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="description" content="请输入网页关键字,并且控制在31个字以内">
+  <meta name="keyword" content="请输入网页内容描述,百度要求80个字符以内,标准是要求76个字符">
+  <meta name="format-detection" content="telephone=no">
+  <style type="text/css" rel="stylesheet">
+    a{
+      text-decoration: none;
+      float: left;
+      text-align: center;
+    }
+    .pagination{
+     width: 400px;
+      height: 32px;
+      position: absolute;
+      left: 50%;
+      margin-left: -200px;
+      overflow: hidden;
+    }
+    .pagination-nav{
+      float: left;
+      margin: 0 auto;
+      width: 300px;
+      /*height: 100%;*/
+      text-align: center;
+      line-height: 30px;
+    }
+    .pagination-nav > a {
+      width: 58px;
+      height: 100%;
+      border: 1px solid #999;
+    }
+    .left,.right{
+      width: 50px;
+      height: 100%;
+      line-height: 30px;
+    }
+    .on{
+      background-color: #337AB7;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<div id="App">
+  <div class="pagination">
+    <a href="javascript:;" class="left" @click="left()" v-if="page != 1"> < </a>
+    <nav class="pagination-nav" ref="paginationNav">
+      <a href="javascript:;" v-for="index in aText" :class="{on:page == index.text}">{{index.text}}</a>
+    </nav>
+    <a href="javascript:;" class="right" @click="right()" v-if="page != pages"> > </a>
+  </div>
+</div>
+<script type="text/javascript" src="vue.js"></script>
+<script>
+var vm = new Vue({
+  el:'#App',
+  data:{
+      aText:[
+        {text:1},
+        {text:2},
+        {text:3},
+        {text:4},
+        {text:5},
+        {text:6},
+        {text:7},
+        {text:8},
+        {text:9},
+        {text:10},
+        {text:1},
+        {text:2},
+        {text:3},
+        {text:4},
+        {text:5},
+        {text:6},
+        {text:7},
+        {text:8},
+        {text:9}
+      ],
+      page:1,
+      pages:''
+  },
+  mounted:function () {
+    this.pages = this.$refs.paginationNav.children.length;//获取总页数
+  },
+  methods:{
+    left:function(){
+      this.page--;
+    },
+    right:function () {
+      this.page++;
+      if(this.page%5 === 0){
+        console.log(this.page);
+        for (let i = 0;i < this.page;i++){
+          this.$refs.paginationNav.children[i].style.display = 'none';
+        }
+      }
+    }
+  }
+})
+</script>
+</body>
+</html>
